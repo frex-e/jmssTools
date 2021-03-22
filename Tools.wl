@@ -15,12 +15,13 @@ TurningPointForm[var_, expression_] :=
 
 
 SetAttributes[ConditionalFunction, HoldAll]
-ConditionalFunction::usage = "f := ConditionalFunction[x,exp,condition] is equivelant to f(x)=exp, condition"
-ConditionalFunction[variable_, expression_, condition_] :=
+RestrictedFunction::usage = "f := ConditionalFunction[x,exp,condition] is equivelant to f(x)=exp, condition"
+RestrictedFunction[variable_, expression_, condition_] :=
     Function[variable, ConditionalExpression[expression, condition]]
 
 
 Begin["`Private`"]
+
 
 
 

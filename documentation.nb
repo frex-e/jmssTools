@@ -1,0 +1,491 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     18393,        483]
+NotebookOptionsPosition[     16291,        437]
+NotebookOutlinePosition[     16770,        454]
+CellTagsIndexPosition[     16727,        451]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Tools.wl Documentation", "Title",
+ CellChangeTimes->{{3.8254384798360915`*^9, 
+  3.8254384892358027`*^9}},ExpressionUUID->"5c1b7dbd-30c2-457c-aedf-\
+56c345413328"],
+
+Cell[CellGroupData[{
+
+Cell["Read Me!", "Section",
+ CellChangeTimes->{{3.8254384984807234`*^9, 
+  3.825438501981573*^9}},ExpressionUUID->"17eac406-7e3a-46a3-8bb5-\
+5989f695b87e"],
+
+Cell["\<\
+For the package to work, please run the following commands in a Mathematica \
+notebook within the same directory (same file):\
+\>", "Text",
+ CellChangeTimes->{{3.8254385160950747`*^9, 3.825438528731098*^9}, {
+  3.8254386080106096`*^9, 
+  3.8254386264762983`*^9}},ExpressionUUID->"c3cf4829-87ec-4229-a0db-\
+318ca6a4e8ee"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SetDirectory", "[", 
+  RowBox[{"NotebookDirectory", "[", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8254386287558575`*^9, 3.825438637208192*^9}, {
+  3.8254386851571274`*^9, 3.8254386976439624`*^9}},
+ CellLabel->
+  "In[137]:=",ExpressionUUID->"ebd9b66c-fb62-4e5f-a7ff-99b9ca390d99"],
+
+Cell[BoxData["\<\"D:\\\\mathematica\\\\notes\"\>"], "Output",
+ CellChangeTimes->{3.82543869978785*^9},
+ CellLabel->
+  "Out[137]=",ExpressionUUID->"965dbc8d-c3f8-4d8a-a195-45aa1b648c06"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"<<", "Tools.wl"}]], "Input",
+ CellEvaluationLanguage->"Python",
+ CellChangeTimes->{{3.825438704266177*^9, 3.8254387548088646`*^9}},
+ CellLabel->
+  "In[138]:=",ExpressionUUID->"64a23d29-125b-4b8a-8900-22413b4223f1"],
+
+Cell["\<\
+To makes sure that the package has loaded correct, run a command like the one \
+below:\
+\>", "Text",
+ CellChangeTimes->{{3.825438767152853*^9, 
+  3.8254387935065565`*^9}},ExpressionUUID->"bd4e2ff1-97ee-4376-9a13-\
+2d830e51592b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "TurningPointForm"}]], "Input",
+ CellChangeTimes->{{3.8254387968521395`*^9, 3.825438801972892*^9}, {
+  3.8254390395244827`*^9, 3.825439056397863*^9}},
+ CellLabel->
+  "In[143]:=",ExpressionUUID->"a341ebe6-68e7-4411-a6b5-c52afb9bb84f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\" Symbol\"\>", "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"For the expression: a \
+\\!\\(\\*SuperscriptBox[\\(x\\), \\(2\\)]\\)+b x+c, \
+CompleteTheSquare[x,{a,b,c}] will return the equation in turning point form\"\
+\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Definitions\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"Definitions\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "Definitions", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{
+                    RowBox[{"TurningPointForm", "[", 
+                    RowBox[{"var_", ",", "expression_"}], "]"}], ":=", 
+                    RowBox[{"Module", "[", 
+                    RowBox[{
+                    RowBox[{"{", "y", "}"}], ",", 
+                    RowBox[{
+                    RowBox[{"x2co", "=", 
+                    RowBox[{"Coefficient", "[", 
+                    RowBox[{"expression", ",", "var", ",", "2"}], "]"}]}], 
+                    ";", 
+                    RowBox[{"xco", "=", 
+                    RowBox[{"Coefficient", "[", 
+                    RowBox[{"expression", ",", "var", ",", "1"}], "]"}]}], 
+                    ";", 
+                    RowBox[{"cons", "=", 
+                    RowBox[{"Coefficient", "[", 
+                    RowBox[{"expression", ",", "var", ",", "0"}], "]"}]}], 
+                    ";", 
+                    RowBox[{"y", "=", 
+                    RowBox[{
+                    RowBox[{"x2co", " ", 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{"var", "+", 
+                    FractionBox["xco", 
+                    RowBox[{"2", " ", "x2co"}]]}], ")"}], "2"]}], "+", "cons",
+                     "-", 
+                    FractionBox[
+                    SuperscriptBox["xco", "2"], 
+                    RowBox[{"4", " ", "x2co"}]]}]}]}]}], "]"}]}]}, {" "}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], "\<\"Tools`TurningPointForm\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\" Symbol\"\>", "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"For the expression: a \
+\\!\\(\\*SuperscriptBox[\\(x\\), \\(2\\)]\\)+b x+c, \
+CompleteTheSquare[x,{a,b,c}] will return the equation in turning point form\"\
+\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {3., 7.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {3., 7.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[
+   Association[
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "For the expression: a \!\(\*SuperscriptBox[\(x\), \(2\)]\)+b x+c, \
+CompleteTheSquare[x,{a,b,c}] will return the equation in turning point form", 
+    "Documentation" -> None, "OwnValues" -> None, "UpValues" -> None, 
+    "DownValues" -> 
+    Information`InformationValueForm[
+     DownValues, Tools`TurningPointForm, {Tools`TurningPointForm[
+         Pattern[Tools`var, 
+          Blank[]], 
+         Pattern[Tools`expression, 
+          Blank[]]] :> 
+       Module[{Tools`y}, 
+         Tools`x2co = Coefficient[Tools`expression, Tools`var, 2]; 
+         Tools`xco = Coefficient[Tools`expression, Tools`var, 1]; 
+         Tools`cons = Coefficient[Tools`expression, Tools`var, 0]; 
+         Tools`y = Tools`x2co (Tools`var + Tools`xco/(2 Tools`x2co))^2 + 
+           Tools`cons - Tools`xco^2/(4 Tools`x2co)]}], "SubValues" -> None, 
+    "DefaultValues" -> None, "NValues" -> None, "FormatValues" -> None, 
+    "Options" -> None, "Attributes" -> {}, "FullName" -> 
+    "Tools`TurningPointForm"], False]]], "Output",
+ CellChangeTimes->{
+  3.8254388025591354`*^9, {3.8254390412698565`*^9, 3.825439056852192*^9}},
+ CellLabel->
+  "Out[143]=",ExpressionUUID->"c54bf8cd-61ee-4d9c-ac08-abfc15957248"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Commands", "Section",
+ CellChangeTimes->{{3.8254384372493095`*^9, 
+  3.825438438637912*^9}},ExpressionUUID->"d55ed4fd-3cb8-4a85-94d5-\
+7cc8dfed7db4"],
+
+Cell[CellGroupData[{
+
+Cell["TurningPointForm", "Subsection",
+ CellChangeTimes->{{3.825438372858577*^9, 
+  3.8254383875615087`*^9}},ExpressionUUID->"2ca679bc-305a-4677-adc2-\
+914c7c30cc12"],
+
+Cell["Converts a quadratic into turning point form.", "Text",
+ CellChangeTimes->{{3.8254391722065573`*^9, 
+  3.8254392360678263`*^9}},ExpressionUUID->"8f9e545b-5291-4226-9264-\
+a416d0713405"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.825439276674073*^9, 3.825439278429098*^9}, {
+  3.825439387566259*^9, 3.825439395852985*^9}, {3.825439454440799*^9, 
+  3.8254394744809694`*^9}, {3.8254395229416027`*^9, 3.825439523412568*^9}, {
+  3.825439616364342*^9, 
+  3.8254396971296167`*^9}},ExpressionUUID->"eeae98f5-542c-4bb5-bd62-\
+e694c0480dd9"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Quit", "intm", 
+   "\"Machine-sized integer expected at position \\!\\(\\*RowBox[{\\\"1\\\"}]\
+\\) in \\!\\(\\*RowBox[{\\\"Quit\\\", \\\"[\\\", \\\"\\\\\\\"Tools`\\\\\\\"\\\
+\", \\\"]\\\"}]\\).\"", 2, 172, 16, 28593507739210249107, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.825439659680982*^9},
+ CellLabel->
+  "During evaluation of \
+In[172]:=",ExpressionUUID->"567efbd9-3feb-473e-85de-5f940e8a1aea"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TurningPointForm", "[", 
+  RowBox[{"x", "+", "3"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8254392510099382`*^9, 3.8254392647215176`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"d30f1e0e-af5a-4de9-94c1-9d81b399fc8a"],
+
+Cell[BoxData[
+ RowBox[{"TurningPointForm", "[", 
+  RowBox[{"3", "+", "x"}], "]"}]], "Output",
+ CellChangeTimes->{3.8254392654827404`*^9, 3.8254397120508385`*^9},
+ CellLabel->"Out[1]=",ExpressionUUID->"9d088ae0-4d7a-4b82-b297-be6a19f60e5f"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1096.8, 604.8},
+WindowMargins->{{12.6, Automatic}, {Automatic, 0}},
+FrontEndVersion->"12.2 for Microsoft Windows (64-bit) (December 12, 2020)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"e0ed0e30-eef3-444e-8534-7fef8f08281d"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 169, 3, 95, "Title",ExpressionUUID->"5c1b7dbd-30c2-457c-aedf-56c345413328"],
+Cell[CellGroupData[{
+Cell[774, 29, 155, 3, 69, "Section",ExpressionUUID->"17eac406-7e3a-46a3-8bb5-5989f695b87e"],
+Cell[932, 34, 330, 7, 34, "Text",ExpressionUUID->"c3cf4829-87ec-4229-a0db-318ca6a4e8ee"],
+Cell[CellGroupData[{
+Cell[1287, 45, 308, 6, 39, "Input",ExpressionUUID->"ebd9b66c-fb62-4e5f-a7ff-99b9ca390d99"],
+Cell[1598, 53, 185, 3, 39, "Output",ExpressionUUID->"965dbc8d-c3f8-4d8a-a195-45aa1b648c06"]
+}, Open  ]],
+Cell[1798, 59, 238, 5, 39, "Input",ExpressionUUID->"64a23d29-125b-4b8a-8900-22413b4223f1"],
+Cell[2039, 66, 238, 6, 34, "Text",ExpressionUUID->"bd4e2ff1-97ee-4376-9a13-2d830e51592b"],
+Cell[CellGroupData[{
+Cell[2302, 76, 261, 5, 39, "Input",ExpressionUUID->"a341ebe6-68e7-4411-a6b5-c52afb9bb84f"],
+Cell[2566, 83, 11724, 290, 100, "Output",ExpressionUUID->"c54bf8cd-61ee-4d9c-ac08-abfc15957248"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14339, 379, 155, 3, 69, "Section",ExpressionUUID->"d55ed4fd-3cb8-4a85-94d5-7cc8dfed7db4"],
+Cell[CellGroupData[{
+Cell[14519, 386, 166, 3, 34, "Subsection",ExpressionUUID->"2ca679bc-305a-4677-adc2-914c7c30cc12"],
+Cell[14688, 391, 191, 3, 34, "Text",ExpressionUUID->"8f9e545b-5291-4226-9264-a416d0713405"],
+Cell[CellGroupData[{
+Cell[14904, 398, 351, 6, 39, "Input",ExpressionUUID->"eeae98f5-542c-4bb5-bd62-e694c0480dd9"],
+Cell[15258, 406, 462, 10, 24, "Message",ExpressionUUID->"567efbd9-3feb-473e-85de-5f940e8a1aea"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15757, 421, 240, 4, 39, "Input",ExpressionUUID->"d30f1e0e-af5a-4de9-94c1-9d81b399fc8a"],
+Cell[16000, 427, 239, 4, 39, "Output",ExpressionUUID->"9d088ae0-4d7a-4b82-b297-be6a19f60e5f"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
