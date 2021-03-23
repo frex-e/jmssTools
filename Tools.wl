@@ -26,6 +26,32 @@ RestrictedInverse[variable_,expression_,condition_]:=
 	InverseFunction[RestrictedFunction[variable,expression,condition]]
 
 
+SetAttributes[DetailedPlot,HoldAll]
+DetailedPlot::usage = "The same as Plot but with intercepts"
+DetailedPlot[exp_,args__, opts : OptionsPattern[Plot]]:=
+	Module[{graph,points,exps,current,solutions,POINTSS,labels},
+		points = {};
+		graph = Plot[exp,args,opts];
+		exps = If[Head@exp =!= List,
+			{exp},exp];
+		For [n = 1,n<= Length[exps],n++,
+			current = exps[[n]];
+			(*Y-int*)
+			points = Append[points,{0,current/.args[[1]]->0}];
+			solutions = Solve[current==0&&args[[2]]<= args[[1]]<= args[[3]],args[[1]],Reals];
+			Table[
+				points = Append[points,{args[[1]]/.solutions[[i]],0}]
+			,{i,1,Length[solutions]}]
+		];
+		POINTSS = Graphics[Table[Point[points[[i]]],{i,1,Length[points]}]];
+		
+		labels = Graphics[Table[
+				Text[points[[i]],points[[i]],{-1.2,0}],
+				{i,1,Length[points]}]];
+		Show[graph,POINTSS,labels]
+]
+
+
 Begin["`Private`"]
 
 
