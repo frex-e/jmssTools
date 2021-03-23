@@ -5,27 +5,28 @@ TurningPointForm::usage = "For the expression: a \!\(\*SuperscriptBox[\(x\), \(2
 
 SetAttributes[CompleteTheSquare, HoldAll]
 TurningPointForm[var_, expression_] :=
-    Module[{y},
+    Module[{out},
         x2co = Coefficient[expression, var, 2];
         xco = Coefficient[expression, var, 1];
         cons = Coefficient[expression, var, 0];
-        y = x2co (var+xco/(2 x2co))^2+cons -(xco)^2/(4 x2co)
+        out = x2co (var+xco/(2 x2co))^2+cons -(xco)^2/(4 x2co)
     ]
 
 
 
-SetAttributes[ConditionalFunction, HoldAll]
+SetAttributes[RestrictedFunction, HoldAll]
 RestrictedFunction::usage = "f := ConditionalFunction[x,exp,condition] is equivelant to f(x)=exp, condition"
 RestrictedFunction[variable_, expression_, condition_] :=
     Function[variable, ConditionalExpression[expression, condition]]
 
 
+SetAttributes[RestrictedInverse,HoldAll]
+RestrictedInverse::usage = "For those too lazy to put Restricted function in inverse"
+RestrictedInverse[variable_,expression_,condition_]:=
+	InverseFunction[RestrictedFunction[variable,expression,condition]]
+
+
 Begin["`Private`"]
-
-
-
-
-
 
 
 End[]
