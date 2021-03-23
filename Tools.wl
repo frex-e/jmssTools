@@ -31,6 +31,7 @@ DetailedPlot::usage = "The same as Plot but with intercepts"
 DetailedPlot[exp_,args__, opts : OptionsPattern[Plot]]:=
 	Module[{graph,points,exps,current,solutions,POINTSS,labels},
 		points = {};
+		solutions = {};
 		graph = Plot[exp,args,opts];
 		exps = If[Head@exp =!= List,
 			{exp},exp];
@@ -38,10 +39,23 @@ DetailedPlot[exp_,args__, opts : OptionsPattern[Plot]]:=
 			current = exps[[n]];
 			(*Y-int*)
 			points = Append[points,{0,current/.args[[1]]->0}];
+			
+			(*X-int*)
 			solutions = Solve[current==0&&args[[2]]<= args[[1]]<= args[[3]],args[[1]],Reals];
 			Table[
 				points = Append[points,{args[[1]]/.solutions[[i]],0}]
-			,{i,1,Length[solutions]}]
+			,{i,1,Length[solutions]}];
+			
+			solutions = {};
+			(*Intersections*)
+			Table[
+			If[i=!=n,
+				solutions = Solve[y==current&&y==exps[[i]]&&args[[2]]<= args[[1]]<= args[[3]],{args[[1]],y},Reals];
+				Table[
+					points = Append[points,{args[[1]],y}/.solutions[[p]]]
+				,{p,1,Length[solutions]}]
+			]
+			,{i,1,Length[exps]}]
 		];
 		POINTSS = Graphics[Table[Point[points[[i]]],{i,1,Length[points]}]];
 		
