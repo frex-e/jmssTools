@@ -26,44 +26,50 @@ RestrictedInverse[variable_,expression_,condition_]:=
 	InverseFunction[RestrictedFunction[variable,expression,condition]]
 
 
-SetAttributes[DetailedPlot,HoldAll]
-DetailedPlot::usage = "The same as Plot but with intercepts"
-DetailedPlot[exp_,args__, opts : OptionsPattern[Plot]]:=
-	Module[{graph,points,exps,current,solutions,POINTSS,labels},
-		points = {};
-		solutions = {};
-		graph = Plot[exp,args,opts];
-		exps = If[Head@exp =!= List,
-			{exp},exp];
-		For [n = 1,n<= Length[exps],n++,
-			current = exps[[n]];
-			(*Y-int*)
-			points = Append[points,{0,current/.args[[1]]->0}];
-			
-			(*X-int*)
-			solutions = Solve[current==0&&args[[2]]<= args[[1]]<= args[[3]],args[[1]],Reals];
-			Table[
-				points = Append[points,{args[[1]]/.solutions[[i]],0}]
-			,{i,1,Length[solutions]}];
-			
-			solutions = {};
-			(*Intersections*)
-			Table[
-			If[i=!=n,
-				solutions = Solve[y==current&&y==exps[[i]]&&args[[2]]<= args[[1]]<= args[[3]],{args[[1]],y},Reals];
-				Table[
-					points = Append[points,{args[[1]],y}/.solutions[[p]]]
-				,{p,1,Length[solutions]}]
-			]
-			,{i,1,Length[exps]}]
-		];
-		POINTSS = Graphics[Table[Point[points[[i]]],{i,1,Length[points]}]];
-		
-		labels = Graphics[Table[
-				Text[points[[i]],points[[i]],{-1.2,0}],
-				{i,1,Length[points]}]];
-		Show[graph,POINTSS,labels]
-]
+SetAttributes[DetailedPlot, HoldAll]
+DetailedPlot::usage = "The same as Plot but with intercepts and intersections"
+DetailedPlot[exp_, args__, opts:OptionsPattern[Plot]] :=
+    Module[{graph, points, exps, current, solutions, POINTSS, labels, n, i, p, y},
+        points = {};
+        solutions = {};
+        graph = Plot[exp, args, opts];
+        exps = If[Head @ exp =!= List,
+            {exp}
+            ,
+            exp
+        ];
+        For [n = 1, n <= Length[exps], n++,
+        current = exps[[n]];
+        (*Y-int*)
+        points = Append[points, {0, current /. args[[1]] -> 0}];
+        (*X-int*)
+        solutions = Solve[current == 0 && args[[2]] <= args[[1]] <= args[[3]], args[[1]], Reals];
+        Table[
+            points = Append[points, {args[[1]] /. solutions[[i]], 0}]
+            , {i, 1, Length[solutions]}
+        ];
+        solutions = {};
+        (*Intersections*)
+        Table[
+            If[i =!= n,
+                solutions = Solve[y == current && y == exps[[i]] && args[[2]] <= args[[1]] <= args[[3]], {args[[1]], y}, Reals];
+                Table[
+                    If[!MemberQ[points, {args[[1]], y} /. solutions[[p]]],
+                        points = Append[points, {args[[1]], y} /. solutions[[p]]]
+                    ]
+                    , {p, 1, Length[solutions]}
+                ]
+            ]
+            , {i, 1, Length[exps]}
+        ]
+        ];
+        POINTSS = Graphics[Table[Point[points[[i]]], {i, 1, Length[points]}]];
+        labels = Graphics[Table[
+            Text[StringForm["(``,``)",points[[i,1]],points[[i,2]]], points[[i]], {-1.2, 0}],
+            {i, 1, Length[points]}
+        ]];
+        Show[graph, POINTSS, labels]
+    ]
 
 
 Begin["`Private`"]
