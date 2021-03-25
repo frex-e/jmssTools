@@ -65,11 +65,33 @@ DetailedPlot[exp_, args__, opts:OptionsPattern[Plot]] :=
         ];
         POINTSS = Graphics[Table[Point[points[[i]]], {i, 1, Length[points]}]];
         labels = Graphics[Table[
-            Text[StringForm["(``,``)",points[[i,1]],points[[i,2]]], points[[i]], {-1.2, 0}],
+            Text[StringForm["(``,``)", points[[i, 1]], points[[i, 2]]], points[[i]], {-1.2, 0}],
             {i, 1, Length[points]}
         ]];
         Show[graph, POINTSS, labels]
     ]
+
+
+SetAttributes[FindVariation,HoldAll]
+FindVariation::usage="Basically a shortcut of FindFit[] for direct and inverse variation"
+FindVariation[dataa_,varr_,tolerance_:0.01]:=
+	If[Length[dataa[[1]]]===2,
+		Module[{solution,x,k,b},
+			solution=FindFit[dataa,k*x^b,{k,b},x];
+			If [tolerance=!=0,solution=Rationalize[solution,tolerance]];
+			
+			Simplify[k varr^b/.solution]
+		]
+	,If[Length[dataa[[1]]]===3,
+		Module[{solution,xx,k,b1,b2,zz},
+			solution = FindFit[dataa,k*xx^b1*zz^b2,{k,b1,b2},{xx,zz}];
+			If[tolerance=!=0,solution=Rationalize[solution,tolerance]];
+			Simplify[k varr[[1]]^b1 varr[[2]]^b2/.solution]
+		]
+	,Message[FindVariation::badargs];
+	$Failed]
+	]
+
 
 
 Begin["`Private`"]
