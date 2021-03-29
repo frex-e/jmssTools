@@ -2,6 +2,8 @@
 
 BeginPackage["Tools`"]
 TurningPointForm::usage = "For the expression: a \!\(\*SuperscriptBox[\(x\), \(2\)]\)+b x+c, CompleteTheSquare[x,{a,b,c}] will return the equation in turning point form"
+isLoaded//ClearAll
+isLoaded = True
 
 TurningPointForm //ClearAll
 SetAttributes[TurningPointForm, HoldAll]
@@ -82,8 +84,9 @@ DetailedPlot[exp_, args__, opts:OptionsPattern[]] :=
             , {i, 1, Length[exps]}
         ]
         ];
-        points = DeleteCases[points,a_/;Head@N[a[[1]]]=!=Real||Head@N[a[[2]]]=!=Real,{2}];
-        
+        ClearAll[bbb];
+        points = DeleteCases[points,bbb_/;Head@N[bbb[[1]]]=!=Real||Head@N[bbb[[2]]]=!=Real,{2}];
+        ClearAll[bbb];
         points[["Intercections"]] = FullSimplify[points[["Intercections"]]];
         points[["Stationary"]] = FullSimplify[points[["Stationary"]]];
         points[["Intercepts"]] = FullSimplify[points[["Intercepts"]]];
