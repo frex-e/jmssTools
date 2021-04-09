@@ -1,0 +1,76 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      2183,         68]
+NotebookOptionsPosition[      1496,         46]
+NotebookOutlinePosition[      2086,         67]
+CellTagsIndexPosition[      2043,         64]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{
+   RowBox[{"!", 
+    RowBox[{"ValueQ", "[", "Tools`isLoaded", "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"SetDirectory", "[", 
+     RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";", " ", 
+    RowBox[{"<<", "Tools.wl"}], ";", "\"\<Tools.ws loaded\>\""}], ",", 
+   "\"\<Tools.ws already loaded\>\""}], "]"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.825538007513694*^9, 3.8255380178042555`*^9}, 
+   3.8261319897648067`*^9},
+ CellLabel->"In[1]:=",ExpressionUUID->"34fd698b-e51b-4ce8-bd4c-c9a1f52ee87f"],
+
+Cell[BoxData[
+ RowBox[{"SetOptions", "[", 
+  RowBox[{
+   RowBox[{"InputNotebook", "[", "]"}], ",", 
+   RowBox[{"Saveable", "\[Rule]", "False"}]}], "]"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.826134437240511*^9, 3.8261344385395184`*^9}, {
+  3.8261377361076913`*^9, 
+  3.826137771316973*^9}},ExpressionUUID->"56fc622f-9ab8-48ad-a23c-\
+66373a6f8781"]
+},
+ClosingSaveDialog->False,
+InitializationCellEvaluation->True,
+WindowSize->{1084.8, 604.8},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+TaggingRules->{
+ "WelcomeScreenSettings" -> {"FEStarting" -> False}, "TryRealOnly" -> False},
+Magnification:>1. Inherited,
+FrontEndVersion->"12.2 for Microsoft Windows (64-bit) (December 12, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"28dfd1b2-c138-413f-8827-15482e03efed"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 562, 13, 65, "Input",ExpressionUUID->"34fd698b-e51b-4ce8-bd4c-c9a1f52ee87f",
+ InitializationCell->True],
+Cell[1123, 35, 369, 9, 44, "Input",ExpressionUUID->"56fc622f-9ab8-48ad-a23c-66373a6f8781",
+ InitializationCell->True]
+}
+]
+*)
+
