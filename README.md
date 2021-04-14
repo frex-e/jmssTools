@@ -36,7 +36,7 @@ Out= ```(2 z)/x```
 ### DetailedPlot
 Works the same as Plot, but adds intercepts, intersections, and stationary points.  
 In= ```DetailedPlot[x + 1, {x, -5, 5}]```
-![](https://raw.githubusercontent.com/frex-e/jmssTools/main/images/DetailedPlot8.png)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/DetailedPlot8.png)
 
 Types of points are colour coded:
 - Intersections: Red
@@ -46,34 +46,34 @@ Types of points are colour coded:
 In the case where 1 point may be 2 types, priority is Stationary Points > Intersections > Axes Intercepts
 
 In= ```DetailedPlot[{x^2 + 2, 2 x + 5}, {x, -5, 5}]```
-![](https://raw.githubusercontent.com/frex-e/jmssTools/main/images/DetailedPlot7.png)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/DetailedPlot7.png)
 
 If you you wish to see labels in decimal form, use DecimalPlaces -> True, or DecimalPlaces -> n, for n number of decimal places
 In= ```DetailedPlot[Sin[x] + 1/2, {x, -\[Pi], \[Pi]}, DecimalPlaces -> True]```
-![](https://raw.githubusercontent.com/frex-e/jmssTools/main/images/DetailedPlot6.png)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/DetailedPlot6.png)
 
 In= ```DetailedPlot[Sin[x] + 1/2, {x, -\[Pi], \[Pi]}, DecimalPlaces -> 2]```
-![](https://raw.githubusercontent.com/frex-e/jmssTools/main/images/DetailedPlot5.png)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/DetailedPlot5.png)
 
 As you can see, it can get a little cluttered:  
 In= ```DetailedPlot[{Sin[x], Cos[x]}, {x, 0, 10}]```
-![](https://raw.githubusercontent.com/frex-e/jmssTools/main/images/DetailedPlot4.png)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/DetailedPlot4.png)
 
 If labels are appearing off the graph, you can double click the graph, and drag them back on.
 
 If it gets too cluttered, you can filter which types of labels are shown with the Labels argument:  
 In= ```DetailedPlot[{Sin[x], Cos[x]}, {x, 0, 10}, Labels -> "Intersections"]```
-![](https://raw.githubusercontent.com/frex-e/jmssTools/main/images/DetailedPlot3.png)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/DetailedPlot3.png)
 
 Valid arguments are "Intercepts", "Intersections", or "Stationary" (For stationary points)  
 If you wish to show 2 types of labels, simply use a list.  
 In= ```DetailedPlot[{Sin[x], Cos[x]}, {x, 0, 10}, Labels -> {"Intersections", "Stationary"}]```
-![](https://raw.githubusercontent.com/frex-e/jmssTools/main/images/DetailedPlot2.png)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/DetailedPlot2.png)
 
 You can also change the offset of the labels, with the argument LabelOffset -> {x,y}  
 (It might not move the direction you expect. Play around with it a bit first.)  
 In= ```DetailedPlot[{Sin[x], Cos[x]}, {x, 0, 10}, Labels -> {"Intersections", "Stationary"}, LabelOffset -> {1, 1}]```
-![](https://raw.githubusercontent.com/frex-e/jmssTools/main/images/DetailedPlot1.png)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/DetailedPlot1.png)
 
 ### TurningPointForm
 Converts a quadratic into turning point form.  
@@ -109,12 +109,11 @@ Out= `Undefined`
 For the purposes of an inverse function:  
 In= `h1 := RestrictedFunction[x, (x - 2)^2 + 2, x >= 2]`  
 In= `Plot[{h1[x], InverseFunction[h1][x]}, {x, 0, 4}, AspectRatio -> Automatic, PlotLegends -> "Expressions", PlotRange -> {0, 4}, AxesOrigin -> {0, 0}]`
-
-![](./images/RestrictedFunction2.png?raw=true)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/RestrictedFunction2.png?raw=true)
 
 In= `h2 := RestrictedFunction[x, (x - 2)^2 + 2, x <= 2]`  
 In= `Plot[{h2[x], InverseFunction[h2][x]}, {x, 0, 4}, AspectRatio -> Full, PlotLegends -> "Expressions"]`
-![](./images/RestrictedFunction1.png?raw=true)
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/RestrictedFunction1.png?raw=true)
 
 ### SolveTriangle
 This will solve for missing side lengths and angles of a triangles. At least 3 values and 1 side length is necessary to solve.  
