@@ -8,18 +8,34 @@ RestrictedInverse::usage = "For those too lazy to put Restricted function in inv
 DetailedPlot::usage = "The same as Plot but with intercepts and intersections";
 FindVariation::usage = "Basically a shortcut of FindFit[] for direct and inverse variation";
 SolveTriangle::usage = "Finds the missing angles and side lengths of a triangle";
+FTest::usage = "Finds whether equations using a given function are true"
 isLoaded//ClearAll
 isLoaded = True;
-
-
-
-
 Begin["`Private`"]
 
 
 
-
 (* ::Subsection:: *)
+(*FTest*)
+
+
+(* ::Text:: *)
+(*I still have no idea how this works*)
+
+
+SetAttributes[FTest,HoldAll]
+FTest[exp_,equations_,var_,func_]:=
+	Module[{solutions,f,eq},
+	ClearAll[func];
+	eq = If[Head@equations =!= List,{equations},equations];
+	
+	solutions = Table[func:=Function[var,exp];If[FullSimplify[eq[[i]]],ClearAll[func];StringForm["`` is true",eq[[i]]],ClearAll[func];StringForm["`` is NOT true",eq[[i]]]],{i,1,Length[eq]}];
+	
+	solutions//TableForm
+	]
+
+
+(* ::Subsection::Closed:: *)
 (*SolveTriangle*)
 
 
@@ -62,7 +78,7 @@ TurningPointForm[var_, expression_] :=
 
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*RestrictedFunction*)
 
 
