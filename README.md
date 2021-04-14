@@ -3,7 +3,7 @@
 ### __A Collection of Mathematica Functions - Useful for VCE Mathematical Methods__
 
 ## Usage:
-1. Clone this repo
+1. Clone this repo or click [here](https://github.com/frex-e/jmssTools/archive/master.zip) for a zip folder
 2. Open / Create a new Mathematica booklet in the same directory
 3. Run in the booklet:
  ```If[! ValueQ[Tools`isLoaded], SetDirectory[NotebookDirectory[]]; << Tools.wl; "Tools.ws loaded", "Tools.ws already loaded"]```
