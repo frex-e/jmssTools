@@ -19,6 +19,10 @@ Begin["`Private`"]
 
 
 
+(* ::Subsection::Closed:: *)
+(*SolveTriangle*)
+
+
 Options[SolveTriangle]={"Degrees"-> True};
 SetAttributes[SolveTriangle,HoldAll]
 SolveTriangle[sides_,angles_,OptionsPattern[]]:=
@@ -57,16 +61,32 @@ TurningPointForm[var_, expression_] :=
 
 
 
+(* ::Subsection::Closed:: *)
+(*RestrictedFunction*)
+
+
 SetAttributes[RestrictedFunction, HoldAll]
 
 RestrictedFunction[variable_, expression_, condition_] :=
     Function[variable, ConditionalExpression[expression, condition]]
 
 
+(* ::Subsection::Closed:: *)
+(*RestrictedInverse*)
+
+
 SetAttributes[RestrictedInverse,HoldAll]
 
 RestrictedInverse[variable_,expression_,condition_]:=
 	InverseFunction[RestrictedFunction[variable,expression,condition]]
+
+
+(* ::Subsection::Closed:: *)
+(*DetailedPlot*)
+
+
+(* ::Text:: *)
+(*To anyone who may look at this in the future, my sincere apologies.*)
 
 
 SetAttributes[DetailedPlot, HoldAll]
@@ -197,6 +217,10 @@ DetailedPlot[exp_, args__, opts:OptionsPattern[]] :=
     ]
 
 
+(* ::Subsection::Closed:: *)
+(*FindVariation*)
+
+
 SetAttributes[FindVariation, HoldAll]
 FindVariation[dataa_, varr_, tolerance_:0.01] :=
     If[Length[dataa[[1]]] === 2,
@@ -219,6 +243,10 @@ FindVariation[dataa_, varr_, tolerance_:0.01] :=
             $Failed
         ]
     ]
+
+
+(* ::Subsection::Closed:: *)
+(*End Statements*)
 
 
 End[]
