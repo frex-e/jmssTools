@@ -19,11 +19,11 @@ Begin["`Private`"]
 
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*SolveTriangle*)
 
 
-Options[SolveTriangle]={"Degrees"-> True};
+Options[SolveTriangle]={"Degrees"-> True,"Area"-> False};
 SetAttributes[SolveTriangle,HoldAll]
 SolveTriangle[sides_,angles_,OptionsPattern[]]:=
 	Module[{a,b,c,A,B,CC,solutions,vars},
@@ -42,7 +42,8 @@ SolveTriangle[sides_,angles_,OptionsPattern[]]:=
 	solutions = Solve[a/Sin[A \[Degree]]==b/Sin[B \[Degree]]&&b/Sin[B \[Degree]]==c/Sin[CC \[Degree]]&&0< A <180&&0 < B < 180&& 0 < CC < 180&&A + B + CC ==180  ,vars,Reals],
 	solutions = Solve[a/Sin[A]==b/Sin[B ]&&b/Sin[B ]==c/Sin[CC]&&0< A <Pi&&0 < B < Pi&& 0 < CC < Pi&&A + B + CC ==Pi  ,vars,Reals]
 	];
-	solutions = FullSimplify[solutions]
+	If[OptionValue["Area"],(a/2*b*Sin[CC*If[OptionValue["Degrees"],Degree,1]])/.FullSimplify[solutions],solutions = FullSimplify[solutions]]
+	
 
 	]
 	
@@ -245,7 +246,7 @@ FindVariation[dataa_, varr_, tolerance_:0.01] :=
     ]
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*End Statements*)
 
 
