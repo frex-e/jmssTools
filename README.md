@@ -109,6 +109,7 @@ Out= `Undefined`
 For the purposes of an inverse function:  
 In= `h1 := RestrictedFunction[x, (x - 2)^2 + 2, x >= 2]`  
 In= `Plot[{h1[x], InverseFunction[h1][x]}, {x, 0, 4}, AspectRatio -> Automatic, PlotLegends -> "Expressions", PlotRange -> {0, 4}, AxesOrigin -> {0, 0}]`
+
 ![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/RestrictedFunction2.png?raw=true)
 
 In= `h2 := RestrictedFunction[x, (x - 2)^2 + 2, x <= 2]`  
