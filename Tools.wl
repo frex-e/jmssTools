@@ -29,9 +29,9 @@ FTest[exp_,equations_,var_,func_]:=
 	ClearAll[func];
 	eq = If[Head@equations =!= List,{equations},equations];
 	
-	solutions = Table[func:=Function[var,exp];If[FullSimplify[eq[[i]]],ClearAll[func];StringForm["`` is true",eq[[i]]],ClearAll[func];StringForm["`` is NOT true",eq[[i]]]],{i,1,Length[eq]}];
-	
-	solutions//TableForm
+	solutions = Table[func:=Function[var,exp];If[FullSimplify[eq[[i]]]===True,ClearAll[func];StringForm["`` is True",eq[[i]]],ClearAll[func];StringForm["`` is False",eq[[i]]]],{i,1,Length[eq]}];
+	ClearAll[func];
+	TableForm[solutions]
 	]
 
 
