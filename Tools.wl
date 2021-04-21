@@ -8,18 +8,38 @@ RestrictedInverse::usage = "For those too lazy to put Restricted function in inv
 DetailedPlot::usage = "The same as Plot but with intercepts and intersections";
 FindVariation::usage = "Basically a shortcut of FindFit[] for direct and inverse variation";
 SolveTriangle::usage = "Finds the missing angles and side lengths of a triangle";
+FTest::usage = "Finds whether equations using a given function are true"
 isLoaded//ClearAll
 isLoaded = True;
-
-
-
-
 Begin["`Private`"]
 
 
 
+(* ::Subsection:: *)
+(*FTest*)
 
-Options[SolveTriangle]={"Degrees"-> True};
+
+(* ::Text:: *)
+(*I still have no idea how this works*)
+
+
+SetAttributes[FTest,HoldAll]
+FTest[exp_,equations_,var_,func_]:=
+	Module[{solutions,f,eq},
+	ClearAll[func];
+	eq = If[Head@equations =!= List,{equations},equations];
+	
+	solutions = Table[func:=Function[var,exp];If[FullSimplify[eq[[i]]]===True,ClearAll[func];StringForm["`` is True",eq[[i]]],ClearAll[func];StringForm["`` is False",eq[[i]]]],{i,1,Length[eq]}];
+	ClearAll[func];
+	TableForm[solutions]
+	]
+
+
+(* ::Subsection::Closed:: *)
+(*SolveTriangle*)
+
+
+Options[SolveTriangle]={"Degrees"-> True,"Area"-> False};
 SetAttributes[SolveTriangle,HoldAll]
 SolveTriangle[sides_,angles_,OptionsPattern[]]:=
 	Module[{a,b,c,A,B,CC,solutions,vars},
@@ -38,7 +58,8 @@ SolveTriangle[sides_,angles_,OptionsPattern[]]:=
 	solutions = Solve[a/Sin[A \[Degree]]==b/Sin[B \[Degree]]&&b/Sin[B \[Degree]]==c/Sin[CC \[Degree]]&&0< A <180&&0 < B < 180&& 0 < CC < 180&&A + B + CC ==180  ,vars,Reals],
 	solutions = Solve[a/Sin[A]==b/Sin[B ]&&b/Sin[B ]==c/Sin[CC]&&0< A <Pi&&0 < B < Pi&& 0 < CC < Pi&&A + B + CC ==Pi  ,vars,Reals]
 	];
-	solutions = FullSimplify[solutions]
+	If[OptionValue["Area"],(a/2*b*Sin[CC*If[OptionValue["Degrees"],Degree,1]])/.FullSimplify[solutions],solutions = FullSimplify[solutions]]
+	
 
 	]
 	
@@ -57,16 +78,32 @@ TurningPointForm[var_, expression_] :=
 
 
 
+(* ::Subsection:: *)
+(*RestrictedFunction*)
+
+
 SetAttributes[RestrictedFunction, HoldAll]
 
 RestrictedFunction[variable_, expression_, condition_] :=
     Function[variable, ConditionalExpression[expression, condition]]
 
 
+(* ::Subsection::Closed:: *)
+(*RestrictedInverse*)
+
+
 SetAttributes[RestrictedInverse,HoldAll]
 
 RestrictedInverse[variable_,expression_,condition_]:=
 	InverseFunction[RestrictedFunction[variable,expression,condition]]
+
+
+(* ::Subsection::Closed:: *)
+(*DetailedPlot*)
+
+
+(* ::Text:: *)
+(*To anyone who may look at this in the future, my sincere apologies.*)
 
 
 SetAttributes[DetailedPlot, HoldAll]
@@ -197,6 +234,10 @@ DetailedPlot[exp_, args__, opts:OptionsPattern[]] :=
     ]
 
 
+(* ::Subsection::Closed:: *)
+(*FindVariation*)
+
+
 SetAttributes[FindVariation, HoldAll]
 FindVariation[dataa_, varr_, tolerance_:0.01] :=
     If[Length[dataa[[1]]] === 2,
@@ -219,6 +260,10 @@ FindVariation[dataa_, varr_, tolerance_:0.01] :=
             $Failed
         ]
     ]
+
+
+(* ::Subsection:: *)
+(*End Statements*)
 
 
 End[]
