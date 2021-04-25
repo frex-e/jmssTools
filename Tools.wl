@@ -8,7 +8,12 @@ RestrictedInverse::usage = "For those too lazy to put Restricted function in inv
 DetailedPlot::usage = "The same as Plot but with intercepts and intersections";
 FindVariation::usage = "Basically a shortcut of FindFit[] for direct and inverse variation";
 SolveTriangle::usage = "Finds the missing angles and side lengths of a triangle";
-FTest::usage = "Finds whether equations using a given function are true"
+FTest::usage = "Finds whether equations using a given function are true";
+FindTangent::usage = "Outputs the tangent to a curve at a given value";
+CosRule::usage = "Uses cosine rule for side length";
+CosRuleAngle::usage = "Uses cosine rule for angle";
+SinRule::usage= "Uses sine rule for side";
+SinRuleAngle::usage="Uses sine rule for angle"
 isLoaded//ClearAll
 isLoaded = True;
 Begin["`Private`"]
@@ -16,6 +21,34 @@ Begin["`Private`"]
 
 
 (* ::Subsection:: *)
+(*CosRule*)
+
+
+CosRule[b_,c_,A_]:=Sqrt[b^2+c^2-2*b*c*Cos[A]]
+
+
+CosRuleAngle[a_,b_,c_]:= ArcCos[(a^2-b^2-c^2)/(-2 b c)]
+
+
+SinRule[x_,y_]:= (y[[1]]*Sin[x])/Sin[y[[2]]]
+
+
+SinRuleAngle[x_,y_]:= ArcSin[(x*Sin[y[[2]]])/y[[1]]]
+
+
+(* ::Subsection:: *)
+(*Find Tangent*)
+
+
+(*SetAttributes[FindTangent,]
+
+Tangent[exp,var]:=
+	Module[{f},
+	f[var[[1]]_]
+	]*)
+
+
+(* ::Subsection::Closed:: *)
 (*FTest*)
 
 
@@ -78,7 +111,7 @@ TurningPointForm[var_, expression_] :=
 
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*RestrictedFunction*)
 
 
