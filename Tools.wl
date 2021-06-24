@@ -9,18 +9,74 @@ DetailedPlot::usage = "The same as Plot but with intercepts and intersections";
 FindVariation::usage = "Basically a shortcut of FindFit[] for direct and inverse variation";
 SolveTriangle::usage = "Finds the missing angles and side lengths of a triangle";
 FTest::usage = "Finds whether equations using a given function are true";
-FindTangent::usage = "Outputs the tangent to a curve at a given value";
+TangentLine::usage = "Outputs the tangent to a curve at a given value";
 CosRule::usage = "Uses cosine rule for side length";
 CosRuleAngle::usage = "Uses cosine rule for angle";
 SinRule::usage= "Uses sine rule for side";
-SinRuleAngle::usage="Uses sine rule for angle"
+SinRuleAngle::usage="Uses sine rule for angle";
+MatrixTransform::usage="";
+Surdify::usage="Converts expressions with fractional powers to surd form.";
+NormalLine::usage="";
+FindLine::usage="";
 isLoaded//ClearAll
 isLoaded = True;
 Begin["`Private`"]
 
 
 
+(* ::Chapter:: *)
+(*My Stuff*)
+
+
+FindLine[a_,b_,var_]:=Module[{y},y/.Solve[y-a[[2]]==((b[[2]]-a[[2]])/(b[[1]]-a[[1]]))(var - a[[1]]),y]//FullSimplify]
+
+
 (* ::Subsection:: *)
+(*Surdify*)
+
+
+SetAttributes[Surdify,HoldAllComplete]
+Surdify[x_]:=(x/.{\!\(\*
+TagBox[
+StyleBox[
+RowBox[{"Power", "[", 
+RowBox[{"n_", ",", 
+RowBox[{"Rational", "[", 
+RowBox[{"a_", ",", "b_"}], "]"}]}], "]"}],
+ShowSpecialCharacters->False,
+ShowStringCharacters->True,
+NumberMarks->True],
+FullForm]\)-> (Surd[n,b])^a})
+
+
+(* ::Subsection::Closed:: *)
+(*NormalLine*)
+
+
+SetAttributes[NormalLine,HoldAll]
+
+NormalLine[exp_,var_,point_]:=
+	Module[{solutions,y},
+	solutions = Solve[y - (exp/.{var-> point})==(-1/(D[exp,var]/.{var-> point}))(var - point),y];
+	solutions = Table[y/.solutions[[i]],{i,Length[solutions]}];
+	If[Length[solutions] ===1,solutions[[1]],solutions]
+	]
+
+
+(* ::Subsection::Closed:: *)
+(*Matrix Transform*)
+
+
+MatrixTransform[exp_,var_,dil_,trans_]:=
+	Module[{ans},
+		ans = exp;
+		ans = dil[[2]]*(ans/. {var->var * 1/dil[[1]]});
+		ans = (ans/.{var-> var - trans[[1]]})+trans[[2]];
+		ans
+	]
+
+
+(* ::Subsection::Closed:: *)
 (*CosRule*)
 
 
@@ -36,16 +92,18 @@ SinRule[x_,y_]:= (y[[1]]*Sin[x])/Sin[y[[2]]]
 SinRuleAngle[x_,y_]:= ArcSin[(x*Sin[y[[2]]])/y[[1]]]
 
 
-(* ::Subsection:: *)
-(*Find Tangent*)
+(* ::Subsection::Closed:: *)
+(*TangentLine*)
 
 
-(*SetAttributes[FindTangent,]
+SetAttributes[TangentLine,HoldAll]
 
-Tangent[exp,var]:=
-	Module[{f},
-	f[var[[1]]_]
-	]*)
+TangentLine[exp_,var_,point_]:=
+	Module[{solutions,y},
+	solutions = Solve[y - (exp/.{var-> point})==(D[exp,var]/.{var-> point})(var - point),y];
+	solutions = Table[y/.solutions[[i]],{i,Length[solutions]}];
+	If[Length[solutions] ===1,solutions[[1]],solutions]
+	]
 
 
 (* ::Subsection::Closed:: *)
@@ -56,13 +114,16 @@ Tangent[exp,var]:=
 (*I still have no idea how this works*)
 
 
-SetAttributes[FTest,HoldAll]
-FTest[exp_,equations_,var_,func_]:=
-	Module[{solutions,f,eq},
+SetAttributes[FTest,HoldAllComplete]
+Options[FTest] = {"Assumptions"->{}}
+
+FTest[exp_,equations_,var_,func_,opts:OptionsPattern[]]:=
+	Module[{solutions,f,eq,asum},
+	asum = OptionValue["Assumptions"]//ReleaseHold;
 	ClearAll[func];
 	eq = If[Head@equations =!= List,{equations},equations];
 	
-	solutions = Table[func:=Function[var,exp];If[FullSimplify[eq[[i]]]===True,ClearAll[func];StringForm["`` is True",eq[[i]]],ClearAll[func];StringForm["`` is False",eq[[i]]]],{i,1,Length[eq]}];
+	solutions = Table[func:=Function[var,exp];If[FullSimplify[ReleaseHold[eq[[i]]],Assumptions->asum]===True,ClearAll[func];StringForm["`` is True",eq[[i]]],ClearAll[func];StringForm["`` is False",eq[[i]]]],{i,1,Length[eq]}];
 	ClearAll[func];
 	TableForm[solutions]
 	]
@@ -128,7 +189,7 @@ RestrictedFunction[variable_, expression_, condition_] :=
 SetAttributes[RestrictedInverse,HoldAll]
 
 RestrictedInverse[variable_,expression_,condition_]:=
-	InverseFunction[RestrictedFunction[variable,expression,condition]]
+	InverseFunction[Function[variable, ConditionalExpression[expression, condition]]]
 
 
 (* ::Subsection::Closed:: *)

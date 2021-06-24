@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      2183,         68]
-NotebookOptionsPosition[      1496,         46]
-NotebookOutlinePosition[      2086,         67]
-CellTagsIndexPosition[      2043,         64]
+NotebookDataLength[      7251,        165]
+NotebookOptionsPosition[      2504,         66]
+NotebookOutlinePosition[      7150,        164]
+CellTagsIndexPosition[      7107,        161]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -25,31 +25,128 @@ Cell[BoxData[
     RowBox[{"ValueQ", "[", "Tools`isLoaded", "]"}]}], ",", 
    RowBox[{
     RowBox[{"SetDirectory", "[", 
-     RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";", " ", 
+     RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";", 
     RowBox[{"<<", "Tools.wl"}], ";", "\"\<Tools.ws loaded\>\""}], ",", 
    "\"\<Tools.ws already loaded\>\""}], "]"}]], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.825538007513694*^9, 3.8255380178042555`*^9}, 
-   3.8261319897648067`*^9},
- CellLabel->"In[1]:=",ExpressionUUID->"34fd698b-e51b-4ce8-bd4c-c9a1f52ee87f"],
+   3.8261319897648067`*^9, {3.829597628517645*^9, 3.8295976365102262`*^9}, {
+   3.82959791733527*^9, 3.8295979174821835`*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"34fd698b-e51b-4ce8-bd4c-c9a1f52ee87f"],
 
-Cell[BoxData[
- RowBox[{"SetOptions", "[", 
-  RowBox[{
-   RowBox[{"InputNotebook", "[", "]"}], ",", 
-   RowBox[{"Saveable", "\[Rule]", "False"}]}], "]"}]], "Input",
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetOptions", "[", 
+   RowBox[{
+    RowBox[{"InputNotebook", "[", "]"}], ",", 
+    RowBox[{"Saveable", "\[Rule]", "False"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetOptions", "[", 
+   RowBox[{
+    RowBox[{"InputNotebook", "[", "]"}], ",", 
+    RowBox[{"InputAutoReplacements", "\[Rule]", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\"\<Dp\>\"", "\[Rule]", "DetailedPlot"}], ",", 
+       RowBox[{"\"\<Int\>\"", "\[Rule]", "Integrate"}]}], "}"}]}]}], "]"}], 
+  ";"}]}], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.826134437240511*^9, 3.8261344385395184`*^9}, {
-  3.8261377361076913`*^9, 
-  3.826137771316973*^9}},ExpressionUUID->"56fc622f-9ab8-48ad-a23c-\
+   3.8261377361076913`*^9, 3.826137771316973*^9}, {3.829597616673417*^9, 
+   3.8295976476497755`*^9}, {3.8295979228458557`*^9, 3.829597928904358*^9}, {
+   3.8334180179300976`*^9, 3.833418157238838*^9}, {3.833418304414214*^9, 
+   3.833418353366317*^9}, {3.83341843622591*^9, 3.833418513833799*^9}, {
+   3.8334186473768024`*^9, 3.833418696138129*^9}, 3.833418928756703*^9, {
+   3.8334190383735886`*^9, 3.833419048349247*^9}, {3.8334191047999697`*^9, 
+   3.8334191303254633`*^9}, {3.8334195930317926`*^9, 3.833419602903349*^9}, {
+   3.833419969815729*^9, 
+   3.833419992408985*^9}},ExpressionUUID->"56fc622f-9ab8-48ad-a23c-\
 66373a6f8781"]
 },
 ClosingSaveDialog->False,
+Saveable->True,
 InitializationCellEvaluation->True,
-WindowSize->{1084.8, 604.8},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{525.6, 609.6},
+WindowMargins->{{Automatic, -4.7999999999999545`}, {Automatic, 0}},
 TaggingRules->{
  "WelcomeScreenSettings" -> {"FEStarting" -> False}, "TryRealOnly" -> False},
+InputAliases->{"intt" -> RowBox[{"\[Integral]", 
+     RowBox[{"\[SelectionPlaceholder]", 
+       RowBox[{"\[DifferentialD]", "\[Placeholder]"}]}]}], "dintt" -> RowBox[{
+     SubsuperscriptBox[
+     "\[Integral]", "\[SelectionPlaceholder]", "\[Placeholder]"], 
+     RowBox[{"\[Placeholder]", 
+       RowBox[{"\[DifferentialD]", "\[Placeholder]"}]}]}], "rintt" -> RowBox[{
+     UnderscriptBox["\[Integral]", 
+      RowBox[{"\[SelectionPlaceholder]", "\[Element]", "\[Placeholder]"}]], 
+     "\[Placeholder]"}], "sumt" -> RowBox[{
+     UnderoverscriptBox["\[Sum]", 
+      RowBox[{"\[SelectionPlaceholder]", "=", "\[Placeholder]"}], 
+      "\[Placeholder]"], "\[Placeholder]"}], "prodt" -> RowBox[{
+     UnderoverscriptBox["\[Product]", 
+      RowBox[{"\[SelectionPlaceholder]", "=", "\[Placeholder]"}], 
+      "\[Placeholder]"], "\[Placeholder]"}], "dt" -> RowBox[{
+     SubscriptBox["\[PartialD]", "\[SelectionPlaceholder]"], 
+     "\[Placeholder]"}], "cbrt" -> 
+  RadicalBox[
+   "\[SelectionPlaceholder]", "3", SurdForm -> True, MultilineFunction -> 
+    None], "surd" -> 
+  RadicalBox[
+   "\[SelectionPlaceholder]", "\[Placeholder]", SurdForm -> True, 
+    MultilineFunction -> None], "ket" -> 
+  TemplateBox[{"\[SelectionPlaceholder]"}, "Ket"], "bra" -> 
+  TemplateBox[{"\[SelectionPlaceholder]"}, "Bra"], "braket" -> 
+  TemplateBox[{"\[SelectionPlaceholder]", "\[Placeholder]"}, "BraKet"], 
+  "delay" -> TemplateBox[{"\[SelectionPlaceholder]"}, "SystemsModelDelay"], 
+  "grad" -> RowBox[{
+     SubscriptBox["\[Del]", "\[SelectionPlaceholder]"], "\[Placeholder]"}], 
+  "del." -> RowBox[{
+     SubscriptBox["\[Del]", "\[SelectionPlaceholder]"], ".", 
+     "\[Placeholder]"}], "delx" -> RowBox[{
+     SubscriptBox["\[Del]", "\[SelectionPlaceholder]"], "\[Cross]", 
+     "\[Placeholder]"}], "del2" -> RowBox[{
+     SubsuperscriptBox["\[Del]", "\[SelectionPlaceholder]", 2], 
+     "\[Placeholder]"}], "kd" -> 
+  TemplateBox[{"\[SelectionPlaceholder]"}, "KroneckerDeltaSeq"], "algs" -> 
+  TemplateBox[{}, "Algebraics"], "bools" -> TemplateBox[{}, "Booleans"], 
+  "comps" -> TemplateBox[{}, "Complexes"], "ints" -> 
+  TemplateBox[{}, "Integers"], "pris" -> TemplateBox[{}, "Primes"], "rats" -> 
+  TemplateBox[{}, "Rationals"], "reals" -> TemplateBox[{}, "Reals"], "pints" -> 
+  TemplateBox[{}, "PositiveIntegers"], "npints" -> 
+  TemplateBox[{}, "NonPositiveIntegers"], "nnints" -> 
+  TemplateBox[{}, "NonNegativeIntegers"], "nints" -> 
+  TemplateBox[{}, "NegativeIntegers"], "prats" -> 
+  TemplateBox[{}, "PositiveRationals"], "nprats" -> 
+  TemplateBox[{}, "NonPositiveRationals"], "nnrats" -> 
+  TemplateBox[{}, "NonNegativeRationals"], "nrats" -> 
+  TemplateBox[{}, "NegativeRationals"], "preals" -> 
+  TemplateBox[{}, "PositiveReals"], "npreals" -> 
+  TemplateBox[{}, "NonPositiveReals"], "nnreals" -> 
+  TemplateBox[{}, "NonNegativeReals"], "nreals" -> 
+  TemplateBox[{}, "NegativeReals"], "dlim" -> RowBox[{
+     UnderscriptBox["\[Limit]", 
+      RowBox[{"\[SelectionPlaceholder]", 
+        UnderscriptBox["\[Rule]", 
+         TemplateBox[{}, "Integers"]], "\[Infinity]"}]], "\[Placeholder]"}], 
+  "dMlim" -> RowBox[{
+     UnderscriptBox["\[MaxLimit]", 
+      RowBox[{"\[SelectionPlaceholder]", 
+        UnderscriptBox["\[Rule]", 
+         TemplateBox[{}, "Integers"]], "\[Infinity]"}]], "\[Placeholder]"}], 
+  "dmlim" -> RowBox[{
+     UnderscriptBox["\[MinLimit]", 
+      RowBox[{"\[SelectionPlaceholder]", 
+        UnderscriptBox["\[Rule]", 
+         TemplateBox[{}, "Integers"]], "\[Infinity]"}]], "\[Placeholder]"}], 
+  "tue" -> OverscriptBox["\[UndirectedEdge]", "\[Placeholder]"], "tde" -> 
+  OverscriptBox["\[DirectedEdge]", "\[Placeholder]"], "cB" -> 
+  TemplateBox[{}, "CombinatorB"], "cC" -> TemplateBox[{}, "CombinatorC"], 
+  "cI" -> TemplateBox[{}, "CombinatorI"], "cK" -> 
+  TemplateBox[{}, "CombinatorK"], "cS" -> TemplateBox[{}, "CombinatorS"], 
+  "cW" -> TemplateBox[{}, "CombinatorW"], "cY" -> 
+  TemplateBox[{}, "CombinatorY"]},
+InputAutoReplacements->{"Dp" -> Tools`DetailedPlot, "Int" -> Integrate},
 Magnification:>1. Inherited,
 FrontEndVersion->"12.2 for Microsoft Windows (64-bit) (December 12, 2020)",
 StyleDefinitions->"Default.nb",
@@ -66,9 +163,9 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 562, 13, 65, "Input",ExpressionUUID->"34fd698b-e51b-4ce8-bd4c-c9a1f52ee87f",
+Cell[558, 20, 656, 14, 104, "Input",ExpressionUUID->"34fd698b-e51b-4ce8-bd4c-c9a1f52ee87f",
  InitializationCell->True],
-Cell[1123, 35, 369, 9, 44, "Input",ExpressionUUID->"56fc622f-9ab8-48ad-a23c-66373a6f8781",
+Cell[1217, 36, 1283, 28, 104, "Input",ExpressionUUID->"56fc622f-9ab8-48ad-a23c-66373a6f8781",
  InitializationCell->True]
 }
 ]
