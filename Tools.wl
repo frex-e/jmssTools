@@ -18,6 +18,8 @@ MatrixTransform::usage="";
 Surdify::usage="Converts expressions with fractional powers to surd form.";
 NormalLine::usage="";
 FindLine::usage="";
+RFTest::usage=="";
+AreaApproximation::usage="";
 isLoaded//ClearAll
 isLoaded = True;
 Begin["`Private`"]
@@ -31,7 +33,7 @@ Begin["`Private`"]
 FindLine[a_,b_,var_]:=Module[{y},y/.Solve[y-a[[2]]==((b[[2]]-a[[2]])/(b[[1]]-a[[1]]))(var - a[[1]]),y]//FullSimplify]
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Surdify*)
 
 
@@ -103,6 +105,32 @@ TangentLine[exp_,var_,point_]:=
 	solutions = Solve[y - (exp/.{var-> point})==(D[exp,var]/.{var-> point})(var - point),y];
 	solutions = Table[y/.solutions[[i]],{i,Length[solutions]}];
 	If[Length[solutions] ===1,solutions[[1]],solutions]
+	]
+
+
+(* ::Subsection::Closed:: *)
+(*RFTest*)
+
+
+SetAttributes[RFTest, HoldAllComplete]
+Options[RFTest] = {"Assumptions" -> {}};
+
+InternalTest[exp_, cond_, var_, func_, asum_] :=
+    Module[{solution,sss},	
+     sss := Function[var,exp];
+	solution = FullSimplify[ReleaseHold[cond]/.{func->sss},Assumptions ->asum];
+	solution
+    ]
+    
+SetAttributes[InternalTest, HoldAllComplete]
+    
+
+
+
+RFTest[exps_,cond_,var_,func_,opts:OptionsPattern[]]:=
+	Module[{sols,funcs},
+	funcs = If[Head@exps===List,exps,{exps}];
+	Table[If[InternalTest[funcs[[i]]//Evaluate,cond,var,func,OptionValue["Assumptions"]]===True,StringForm["`` DOES satisfy condition",funcs[[i]]],StringForm["`` DOES NOT satisfy condition",funcs[[i]]]],{i,1,Length[funcs]}]//TableForm
 	]
 
 
@@ -354,6 +382,19 @@ FindVariation[dataa_, varr_, tolerance_:0.01] :=
             $Failed
         ]
     ]
+
+
+(* ::Subsection:: *)
+(*AreaApproximation*)
+
+
+AreaApproximation[exp_,vars_,step_:1]:=
+	Module[{var,start,end},
+	var = vars[[1]];
+	start = vars[[2]];
+	end = vars[[3]];
+	Total[Table[exp*step/.{var->i}//Simplify,{i,start,end,step}]]//Simplify
+	]
 
 
 (* ::Subsection:: *)
