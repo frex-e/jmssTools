@@ -1,29 +1,40 @@
 (* ::Package:: *)
 
-ClearAll["Tools`*"]
+Unprotect @@ Names["Tools`*"];
+ClearAll @@ Names["Tools`*"];
+PacletUninstall["ResourceFuncs"];
+SetDirectory[NotebookDirectory[]];
+PacletInstall["ResourceFuncs.paclet", ForceVersionInstall -> True];
+Needs["ResourceFuncs`"];
+
 BeginPackage["Tools`"]
-TurningPointForm::usage = "For the expression: a \!\(\*SuperscriptBox[\(x\), \(2\)]\)+b x+c, CompleteTheSquare[x,{a,b,c}] will return the equation in turning point form";
-RestrictedFunction::usage = "f := ConditionalFunction[x,exp,condition] is equivelant to f(x)=exp, condition";
-RestrictedInverse::usage = "For those too lazy to put Restricted function in inverse";
+
+
+TurningPointForm::usage = "For the expression: a \!\(\*SuperscriptBox[\(x\), \(2\)]\)+b x+c, CompleteTheSquare[x,a x^2+b x + c}] will return the equation in turning point form";
 DetailedPlot::usage = "The same as Plot but with intercepts and intersections";
-FindVariation::usage = "Basically a shortcut of FindFit[] for direct and inverse variation";
 SolveTriangle::usage = "Finds the missing angles and side lengths of a triangle";
 FTest::usage = "Finds whether equations using a given function are true";
 TangentLine::usage = "Outputs the tangent to a curve at a given value";
 CosRule::usage = "Uses cosine rule for side length";
 CosRuleAngle::usage = "Uses cosine rule for angle";
-SinRule::usage= "Uses sine rule for side";
-SinRuleAngle::usage="Uses sine rule for angle";
-MatrixTransform::usage="";
-Surdify::usage="Converts expressions with fractional powers to surd form.";
-NormalLine::usage="";
-FindLine::usage="";
-RFTest::usage=="";
-AreaApproximation::usage="";
-isLoaded//ClearAll
+SinRule::usage = "Uses sine rule for side";
+SinRuleAngle::usage = "Uses sine rule for angle";
+MatrixTransform::usage = "";
+Surdify::usage = "Converts expressions with fractional powers to surd form.";
+NormalLine::usage = "";
+FindLine::usage = "";
+RFTest::usage == "";;
+
+
+DecimalPlaces = DecimalPlaces;
+Labels = Labels;
+Stationary = Stationary;
+Intercepts = Intercepts;
+Intersections = Intersections;
+Discontinuities = Discontinuities;
+
 isLoaded = True;
 Begin["`Private`"]
-
 
 
 (* ::Chapter:: *)
@@ -37,7 +48,7 @@ FindLine[a_,b_,var_]:=Module[{y},y/.Solve[y-a[[2]]==((b[[2]]-a[[2]])/(b[[1]]-a[[
 (*Surdify*)
 
 
-SetAttributes[Surdify,HoldAllComplete]
+SetAttributes[Surdify,HoldAll]
 Surdify[x_]:=(x/.{\!\(\*
 TagBox[
 StyleBox[
@@ -70,11 +81,14 @@ NormalLine[exp_,var_,point_]:=
 
 
 MatrixTransform[exp_,var_,dil_,trans_]:=
-	Module[{ans},
-		ans = exp;
-		ans = dil[[2]]*(ans/. {var->var * 1/dil[[1]]});
-		ans = (ans/.{var-> var - trans[[1]]})+trans[[2]];
-		ans
+	Module[{sol,newx,newy,x,y},
+		((newy/.Solve[((y==exp)/.Solve[({
+ {newx},
+ {newy}
+})==dil . ({
+ {var},
+ {y}
+})+trans,{var,y}]),{newy}])/.newx->var)[[1]]
 	]
 
 
@@ -142,8 +156,8 @@ RFTest[exps_,cond_,var_,func_,opts:OptionsPattern[]]:=
 (*I still have no idea how this works*)
 
 
-SetAttributes[FTest,HoldAllComplete]
-Options[FTest] = {"Assumptions"->{}}
+SetAttributes[FTest,HoldAllComplete];
+Options[FTest] = {"Assumptions"->{}};
 
 FTest[exp_,equations_,var_,func_,opts:OptionsPattern[]]:=
 	Module[{solutions,f,eq,asum},
@@ -188,7 +202,7 @@ SolveTriangle[sides_,angles_,OptionsPattern[]]:=
 
 
 SetAttributes[TurningPointForm, HoldAll]
-TurningPointForm[var_, expression_] :=
+TurningPointForm[expression_, var_] :=
     Module[{out,exp},
         exp = Expand[expression];
         x2co = Coefficient[expression, var, 2];
@@ -201,16 +215,6 @@ TurningPointForm[var_, expression_] :=
 
 
 (* ::Subsection::Closed:: *)
-(*RestrictedFunction*)
-
-
-SetAttributes[RestrictedFunction, HoldAll]
-
-RestrictedFunction[variable_, expression_, condition_] :=
-    Function[variable, ConditionalExpression[expression, condition]]
-
-
-(* ::Subsection::Closed:: *)
 (*RestrictedInverse*)
 
 
@@ -220,7 +224,7 @@ RestrictedInverse[variable_,expression_,condition_]:=
 	InverseFunction[Function[variable, ConditionalExpression[expression, condition]]]
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*DetailedPlot*)
 
 
@@ -229,177 +233,243 @@ RestrictedInverse[variable_,expression_,condition_]:=
 
 
 SetAttributes[DetailedPlot, HoldAll]
-Options[DetailedPlot] = Flatten[Append[Options[Plot], {"Labels" -> True, "DecimalPlaces" -> False, "LabelOffset" -> {-1.2, 0.5}}]];
+Options[DetailedPlot] = Flatten[Append[Options[Plot], {Labels -> True, DecimalPlaces -> False, Asymptotes -> True}]];
+
 DetailedPlot[exp_, args__, opts:OptionsPattern[]] :=
-    Module[{graph, points, exps, current, solutions, POINTSS, labels, n, i, p, y, whichlabels, labeledpoints, intercepts, intercections, stationary},
-        points = <||>;
-        labeledpoints = {};
-        solutions = {};
-        graph = Plot[exp, args, Evaluate[FilterRules[{opts}, Options[Plot]]]];
-        exps = If[Head @ exp =!= List,
-            {exp}
-            ,
-            exp
-        ];
-        whichlabels = If[Head @ OptionValue["Labels"] === String,
-            {OptionValue["Labels"]}
-            ,
-            OptionValue["Labels"]
-        ];
-        AssociateTo[points, "Intercections" -> {}];
-        AssociateTo[points, "Intercepts" -> {}];
-        AssociateTo[points, "Stationary" -> {}];
-        For [n = 1, n <= Length[exps], n++,
-        current = exps[[n]];
-        (*Y-int*)
-        points[["Intercepts"]] = Append[points[["Intercepts"]], {0, current /. args[[1]] -> 0}];
-        (*X-int*)
-        solutions = Solve[current == 0 && args[[2]] <= args[[1]] <= args[[3]], args[[1]], Reals];
-        Table[
-            points[["Intercepts"]] = Append[points[["Intercepts"]], {args[[1]] /. solutions[[i]], 0}]
-            , {i, 1, Length[solutions]}
-        ];
-        solutions = {};
-        (*Turning and stationary points*)
-        solutions = Solve[D[current, args[[1]]] == 0 && args[[2]] <= args[[1]] <= args[[3]], args[[1]], Reals];
-        Table[
-            points[["Stationary"]] = Append[points[["Stationary"]], {args[[1]] /. solutions[[i]], Simplify[current /. solutions[[i]]]}]
-            , {i, 1, Length[solutions]}
-        ];
-        (*Intersections*)
-        Table[
-            If[i =!= n,
-                solutions = Solve[yy == current && yy == exps[[i]] && args[[2]] <= args[[1]] <= args[[3]], {args[[1]], yy}, Reals];
-                Table[
-                    If[!MemberQ[points, {args[[1]], yy} /. solutions[[p]]],
-                        points[["Intercections"]] = Append[points[["Intercections"]], {args[[1]], yy} /. solutions[[p]]]
-                    ]
-                    , {p, 1, Length[solutions]}
-                ]
-            ]
-            , {i, 1, Length[exps]}
-        ]
-        ];
-        ClearAll[bbb];
-        points = DeleteCases[points, bbb_ /; Head @ N[bbb[[1]]] =!= Real || Head @ N[bbb[[2]]] =!= Real, {2}];
-        ClearAll[bbb];
-        
-        (*Simplifies points*)
-        points[["Intercections"]] = FullSimplify[points[["Intercections"]]];
-        points[["Stationary"]] = FullSimplify[points[["Stationary"]]];
-        points[["Intercepts"]] = FullSimplify[points[["Intercepts"]]];
-        (*Removes duplicates*)
-        points[["Intercections"]] = DeleteDuplicates[points[["Intercections"]]];
-        points[["Stationary"]] = DeleteDuplicates[points[["Stationary"]]];
-        points[["Intercepts"]] = DeleteDuplicates[points[["Intercepts"]]];
-        (*Draws intercepts*)
-        current = points[["Intercepts"]];
-        intercepts = Graphics[{PointSize[Medium], Blue, Table[Tooltip[Point[current[[i]]], If[OptionValue["DecimalPlaces"] === False,
-            current[[i]]
-            ,
-            If[OptionValue["DecimalPlaces"] === True,
-                N[current[[i]]]
-                ,
-                Round[N[current[[i]]], N[1 / 10^OptionValue["DecimalPlaces"]]]
-            ]
-        ]], {i, 1, Length[current]}]}];
-        If[MemberQ[whichlabels, "Intercepts"] || whichlabels,
-            Table[labeledpoints = Append[labeledpoints, current[[i]]], {i, 1, Length[current]}]
-        ];
-        (*Draws intercections*)
-        current = points[["Intercections"]];
-        intercections = Graphics[{PointSize[Medium], Red, Table[Tooltip[Point[current[[i]]], If[OptionValue["DecimalPlaces"] === False,
-            current[[i]]
-            ,
-            If[OptionValue["DecimalPlaces"] === True,
-                N[current[[i]]]
-                ,
-                Round[N[current[[i]]], N[1 / 10^OptionValue["DecimalPlaces"]]]
-            ]
-        ]], {i, 1, Length[current]}]}];
-        If[MemberQ[whichlabels, "Intersections"] || whichlabels,
-            Table[labeledpoints = Append[labeledpoints, current[[i]]], {i, 1, Length[current]}]
-        ];
-        (*Draws stationary*)
-        current = points[["Stationary"]];
-        stationary = Graphics[{PointSize[Medium], Green, Table[Tooltip[Point[current[[i]]], If[OptionValue["DecimalPlaces"] === False,
-            current[[i]]
-            ,
-            If[OptionValue["DecimalPlaces"] === True,
-                N[current[[i]]]
-                ,
-                Round[N[current[[i]]], N[1 / 10^OptionValue["DecimalPlaces"]]]
-            ]
-        ]], {i, 1, Length[current]}]}];
-        If[MemberQ[whichlabels, "Stationary"] || whichlabels,
-            Table[labeledpoints = Append[labeledpoints, current[[i]]], {i, 1, Length[current]}]
-        ];
-        (*Converts to decimals if DecimalPlaces\[NotEqual]False*)
-        If[OptionValue["DecimalPlaces"] =!= False,
-            If[OptionValue["DecimalPlaces"] === True,
-                labeledpoints = N[labeledpoints]
-                ,
-                labeledpoints = Round[N[labeledpoints], N[1 / 10^OptionValue["DecimalPlaces"]]]
-            ]
-        ];
-        (*Displayes the graphics*)
-        (*POINTSS = Graphics[{PointSize[Medium],Table[Tooltip[Point[points[[i]]],points[[i]]], {i, 1, Length[points]}]}];*)
-        labels = Graphics[Table[
-            Text[labeledpoints[[i]](*StringForm["(``,``)", labeledpoints[[i, 1]], labeledpoints[[i, 2]]]*), labeledpoints[[i]], OptionValue["LabelOffset"]],
-            {i, 1, Length[labeledpoints]}
-        ]];
-        If[whichlabels =!= False,
-            Show[graph, intercepts, intercections, stationary, labels]
-            ,
-            Show[graph, intercepts, intercections, stationary]
-        ]
-    ]
-
-
-(* ::Subsection::Closed:: *)
-(*FindVariation*)
-
-
-SetAttributes[FindVariation, HoldAll]
-FindVariation[dataa_, varr_, tolerance_:0.01] :=
-    If[Length[dataa[[1]]] === 2,
-        Module[{solution, xx, k, b},
-            solution = FindFit[dataa, k * xx^b, {k, b}, xx];
-            If [tolerance =!= 0, solution = Rationalize[solution, tolerance]];
-            Simplify[k varr^b /. solution]
-        ]
-        ,
-        If[Length[dataa[[1]]] === 3,
-            Module[{solution, xx, k, b1, b2, zz},
-                solution = FindFit[dataa, k * xx^b1 * zz^b2, {k, b1, b2}, {xx, zz}];
-                If[tolerance =!= 0,
-                    solution = Rationalize[solution, tolerance]
-                ];
-                Simplify[k varr[[1]]^b1 varr[[2]]^b2 /. solution]
-            ]
-            ,
-            Message[FindVariation::badargs];
-            $Failed
-        ]
-    ]
-
-
-(* ::Subsection:: *)
-(*AreaApproximation*)
-
-
-AreaApproximation[exp_,vars_,step_:1]:=
-	Module[{var,start,end},
-	var = vars[[1]];
-	start = vars[[2]];
-	end = vars[[3]];
-	Total[Table[exp*step/.{var->i}//Simplify,{i,start,end,step}]]//Simplify
+	Module[{vAssGraph,funran,discon,vAsses,assVar, hAssGraph, y, currAss, hAsses, currAsses, ass, roundedPoint, mapOpts, otherExp, currentPoint, pointMap, currentKey, graph, pointsGraph, currentExpression, exps, whichLabels, currentSolutions, points, intersections, stationary, intercepts, ClosedHole, OpenHole, var, startPoint, endPoint, curSol},
+		Off[Piecewise::pairs];
+		var = args[[1]];
+		
+		startPoint = args[[2]];
+		
+		endPoint = args[[3]]; (*Draws the first graph*)
+		
+		hAsses = {}; vAsses = {};
+		
+		graph = Plot[exp, args, Evaluate[FilterRules[{opts}, Options[Plot]]]]; (*Redefines exp as a list*)
+		
+		exps = If[Head @ exp =!= List,
+			{exp}
+			,
+			exp
+		];
+		
+		mapOpts = <|stationary -> Tools`Stationary, intersections -> Tools`Intersections, intercepts -> Tools`Intercepts, OpenHole -> Discontinuities, ClosedHole -> Discontinuities|>;
+		
+		(*Point mapping*)
+		
+		pointMap = <|intercepts -> Blue, intersections -> Red, stationary -> Green, ClosedHole -> Black, OpenHole -> Gray|>;
+		
+		(* Defines the points association*)
+		
+		points = <|intercepts -> {}, stationary -> {}, intersections -> {}, OpenHole -> {}, ClosedHole -> {}|>; (*Loops through each graph*)
+		
+		Table[(* Sets the current expression *)
+			currentExpression = exps[[i]]; (* Y intercepts*)
+			
+			Off[Power::infy];
+			
+			If[Element[currentExpression /. var -> 0, Reals],
+				points[intercepts] = Append[points[intercepts], {0, currentExpression /. var -> 0}];
+			];
+			
+			On[Power::infy];
+			
+			(*X intercepts*)
+			
+			currentSolutions = Solve[currentExpression == 0 && startPoint <= var <= endPoint, var, Reals];
+			
+			If[currentSolutions =!= {{}},
+				Table[
+					points[intercepts] = Append[points[intercepts], {var /. currentSolutions[[n]], 0}];, {n, Length[currentSolutions]}
+				];
+			];
+			
+			(* intersections *)
+			
+			Table[
+				If[n =!= i,
+					otherExp = exps[[n]];
+					
+					currentSolutions = Solve[otherExp == currentExpression && startPoint <= var <= endPoint, var];
+					
+					If[currentSolutions =!= {{}},
+						Table[
+							If[((currentExpression /. currentSolutions[[j]])// N) \[Element] Reals,
+								points[intersections] = Append[points[intersections], {var, currentExpression} /. currentSolutions[[j]]]
+							]
+							, {j, 1, Length[currentSolutions]}
+						];
+					]
+				]
+				, {n, 1, Length[exps]}
+			];
+			
+			(*stationary Points*)
+			
+			currentSolutions = Solve[(D[currentExpression, var] // Evaluate) == 0 && startPoint <= var <= endPoint, var, Reals];
+			
+			If[currentSolutions =!= {{}},
+				Table[
+				If[N[(currentExpression/.currentSolutions[[n]])]\[Element]Reals,
+					points[stationary] = Append[points[stationary], {var /. currentSolutions[[n]], Simplify[currentExpression /. currentSolutions[[n]]]}];], {n, 1, Length[currentSolutions]}
+				];
+			]; (*Discontinuities*)
+			
+			If[Head @ exp === List,
+				currentSolutions = ResourceFuncs`FunctionDiscontinuities[Extract[Hold[exp] /. {ConditionalExpression[x_, y_] :> Piecewise[{{x, y}}, Infinity], Piecewise[x_, Indeterminate] :> Piecewise[x, Infinity]}, {1, i}, Unevaluated], var, "Properties"]
+				,
+				currentSolutions = ResourceFuncs`FunctionDiscontinuities[Extract[Hold[{exp}] /. {ConditionalExpression[x_, y_] :> Piecewise[{{x, y}}, Infinity], Piecewise[x_, Indeterminate] :> Piecewise[x, Infinity]}, {1, i}, Unevaluated], var, "Properties"]
+			];
+			
+			Table[
+				curSol = currentSolutions[[n]];
+				
+				If[N[curSol[[2]][["LeftLimit"]]] \[Element] Reals,
+					If[N[curSol[[2]][["LeftLimit"]]] === N[curSol[[2]][["ValueAtDiscontinuity"]]],
+						points[ClosedHole] = Append[points[ClosedHole], {curSol[[1]][[2]], curSol[[2]][["ValueAtDiscontinuity"]]}]
+						,
+						points[OpenHole] = Append[points[OpenHole], {curSol[[1]][[2]], curSol[[2]][["LeftLimit"]]}]
+					];
+				];
+				
+				If[N[curSol[[2]][["RightLimit"]]] \[Element] Reals,
+					If[N[curSol[[2]][["RightLimit"]]] === N[curSol[[2]][["ValueAtDiscontinuity"]]],
+						points[ClosedHole] = Append[points[ClosedHole], {curSol[[1]][[2]], curSol[[2]][["ValueAtDiscontinuity"]]}]
+						,
+						points[OpenHole] = Append[points[OpenHole], {curSol[[1]][[2]], curSol[[2]][["RightLimit"]]}]
+					];
+				];
+				, {n, 1, Length[currentSolutions]}
+			];
+			(*Cusp
+									currentSolutions = Solve[Evaluate[D[currentExpression,var]] &&startPoint \[LessEqual] var \[LessEqual] endPoint,var];
+									Print[currentSolutions];*)
+			
+			(* Asymptotes *)
+			
+			If[OptionValue[Asymptotes] === True,
+				ass = ResourceFuncs`Asymptotes[currentExpression /. ConditionalExpression[x_, y_] :> x, var, y];
+				
+				(* Oblique asymptotes *)
+				
+				If[MemberQ[Keys[ass], "Oblique"],
+					currAsses = ass["Oblique"];
+					
+					Table[
+						hAsses = Append[hAsses, currAsses[[n]][[1]][[2]]];
+						, {n, 1, Length[currAsses]}
+					];
+				];
+				
+				(*Horizontal*)
+				
+				If[MemberQ[Keys[ass], "Horizontal"],
+					currAsses = ass["Horizontal"];
+					
+					Table[
+						hAsses = Append[hAsses, currAsses[[n]][[1]][[2]]];
+						
+						assVar = currAsses[[n]][[2]][[1]]
+						, {n, 1, Length[currAsses]}
+					];
+				];
+				
+				(* vertical *)
+				funran = Reduce[Reduce[System`FunctionDiscontinuities[currentExpression,var]&&startPoint<=var<=endPoint,var,Reals]//Simplify,var];
+				discon = {};
+				Table[
+				Table[
+					If[N[funran[[x,y]]]\[Element]Reals,AppendTo[discon,funran[[x,y]]]];
+				,{y,1,Length[funran[[x]]]}];
+				If[N[funran[[x]]]\[Element]Reals,AppendTo[discon,funran[[x]]]];
+				,{x,1,Length[funran]}];
+				
+				Table[
+					If[Or[
+					(Limit[currentExpression,var->(discon[[n]]),Direction->1]//Abs)===Infinity,
+					(Limit[currentExpression,var->(discon[[n]]),Direction->-1]//Abs)===Infinity
+					],
+					vAsses = Append[vAsses,discon[[n]]]
+					]
+				,{n,1,Length[discon]}];
+			];
+			, {i, 1, Length[exps]}
+		];
+		
+		(*Drawing obliqueAssymptotes*)
+		
+		If[OptionValue[Asymptotes] === True,
+			hAsses = hAsses /. assVar :> var;
+			
+			hAssGraph = Plot[Tooltip[hAsses // Evaluate], args, PlotStyle -> {{Red, Dashed}}] // Evaluate;
+		
+		(*Vertical asymptotes*)
+		If[OptionValue[Asymptotes]===True,
+			vAssGraph = Graphics[Table[
+			{Red,Dashed,Tooltip[Line[{{vAsses[[i]],(PlotRange/.graph[[2]])[[2]][[1]]-100},{vAsses[[i]],(PlotRange/.graph[[2]])[[2]][[2]]+100}}],vAsses[[i]]]}
+			,{i,1,Length[vAsses]}]]
+		];
+		];
+		
+		(* Creating Everything *)
+		
+		pointsGraph = Graphics[Table[
+			currentKey = Keys[points][[i]];
+			
+			points[currentKey] = FullSimplify[DeleteDuplicates[points[currentKey]]];
+			
+			Table[
+				currentPoint = points[currentKey][[n]];
+				
+				{PointSize[1 / 50], pointMap[currentKey], Tooltip[Point[currentPoint],
+					If[OptionValue[DecimalPlaces] =!= False,
+						roundedPoint = Round[currentPoint, 10^-OptionValue[DecimalPlaces]] // N
+						,
+						roundedPoint = currentPoint
+					];
+					
+					roundedPoint
+				], If[OptionValue[Labels] === True || MemberQ[OptionValue[Labels], mapOpts[currentKey]]||mapOpts[currentKey]===OptionValue[Labels],
+					Text[roundedPoint, currentPoint, {-1, -1}]
+				]}
+				, {n, 1, Length[points[currentKey]]}
+			]
+			, {i, 1, Length[Keys[points]]}
+		]];
+		
+		On[Piecewise::pairs];
+		(*Formatting label*)
+		
+		If[OptionValue[Asymptotes] === True,
+			Show[graph, vAssGraph,hAssGraph, graph, pointsGraph]
+			,
+			Show[graph, pointsGraph]
+		]
 	]
 
 
 (* ::Subsection:: *)
+(*Turning Point Form*)
+
+
+TurningPointForm[var_, expression_] :=
+    Module[{out,exp,x2co,xco,cons},
+        exp = Expand[expression];
+        x2co = Coefficient[expression, var, 2];
+        xco = Coefficient[expression, var, 1];
+        cons = Coefficient[expression, var, 0];
+        out = x2co (var+xco/(2 x2co))^2+cons -(xco)^2/(4 x2co);
+        out
+    ]
+
+
+(* ::Subsection::Closed:: *)
 (*End Statements*)
 
 
-End[]
+End[];
+
+Protect @@ Names["Tools`*"];
+
 EndPackage[]
