@@ -4,11 +4,13 @@
 
 ## Usage:
 1. Clone this repo or click [here](https://github.com/frex-e/jmssTools/archive/master.zip) for a zip folder
-2. Open / Create a new Mathematica booklet in the same directory
-3. Run in the booklet:
+2. Extract the zip file.
+3. Read the documentation.nb file. (Please do read it. I spent "a lot" of time on it)
+4. Open / Create a new Mathematica booklet in the same directory
+5. Run in the booklet:
  ```If[! ValueQ[Tools`isLoaded], SetDirectory[NotebookDirectory[]]; << Tools.wl; "Tools.ws loaded", "Tools.ws already loaded"]```
-4. All commands should work in your notebook until mathematica is quit
-5. To makes sure that the package has loaded correctly, run a command like the one below:
+6. All commands should work in your notebook until mathematica is quit
+7. To makes sure that the package has loaded correctly, run a command like the one below:
  ```?TurningPointForm```
 
 **NOTE:** *Also, if the software malfunctions, resulting in you losing a mark, I'm honestly really sorry, but I'm not a professional programmer, I'm not even that good at it, I'm just doing this for fun in my free time, so use this at your own risk.*
