@@ -1,7 +1,7 @@
 # jmssTools
 
 ### __A Collection of Mathematica Functions - Useful for VCE Mathematical Methods__
-
+![](https://raw.githubusercontent.com/frex-e/jmssTools/master/images/graph.png)
 ## Usage:
 1. Clone this repo or click [here](https://github.com/frex-e/jmssTools/archive/master.zip) for a zip folder
 2. Extract the zip file.
