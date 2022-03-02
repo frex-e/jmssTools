@@ -1,0 +1,95 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3037,         87]
+NotebookOptionsPosition[      2247,         65]
+NotebookOutlinePosition[      2650,         81]
+CellTagsIndexPosition[      2607,         78]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Generate Paclet", "Section",
+ CellChangeTimes->{{3.849377786126904*^9, 
+  3.849377788445018*^9}},ExpressionUUID->"6ddba25b-a307-4ce2-9178-\
+8141e51f80e4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ResourceFunction", "[", "\"\<PacletizeResourceFunction\>\"", "]"}],
+   "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\"\<Asymptotes\>\"", ",", "\"\<FunctionDiscontinuities\>\""}], 
+    "}"}], ",", "\"\<ResourceFuncs.paclet\>\"", ",", 
+   RowBox[{"\"\<PacletName\>\"", "\[Rule]", "\"\<ResourceFuncs\>\""}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.8493777906769876`*^9, 3.8493778029237003`*^9}, {
+   3.849377869882375*^9, 3.849377896215192*^9}, {3.849378003628437*^9, 
+   3.849378020683487*^9}, {3.853273293343588*^9, 3.853273294801937*^9}, {
+   3.853273512186162*^9, 3.853273523848967*^9}, 3.8532787906463623`*^9, {
+   3.8532789994293003`*^9, 3.853279000992552*^9}, {3.853280026309998*^9, 
+   3.8532800338584642`*^9}},
+ CellLabel->"In[25]:=",ExpressionUUID->"1c113cfb-496e-4570-9442-76c0b302b1f6"],
+
+Cell[BoxData["\<\"/home/inj/mathematica/jmssTools/ResourceFuncs.paclet\"\>"], \
+"Output",
+ CellChangeTimes->{3.849378026978791*^9, 3.8532735597313557`*^9, 
+  3.853278825763556*^9, 3.853279031920808*^9, 3.8532800677699757`*^9},
+ CellLabel->"Out[25]=",ExpressionUUID->"afd2847a-53d3-4b12-8d70-5dfc93b76a46"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.853273281289114*^9, 
+  3.853273287531142*^9}},ExpressionUUID->"b8c158c8-b637-4fd6-b92c-\
+00c821162bb4"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.853280079983323*^9, 
+  3.853280082591539*^9}},ExpressionUUID->"a8d024b0-4231-4498-80d1-\
+f2fcd39f2a5b"]
+}, Open  ]]
+},
+WindowSize->{703.5, 767.25},
+WindowMargins->{{Automatic, 10.5}, {10.5, Automatic}},
+FrontEndVersion->"12.2 for Linux x86 (64-bit) (December 12, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"4a25ccaa-150a-4498-a098-f04d61759b5b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 160, 3, 68, "Section",ExpressionUUID->"6ddba25b-a307-4ce2-9178-8141e51f80e4"],
+Cell[CellGroupData[{
+Cell[765, 29, 836, 16, 71, "Input",ExpressionUUID->"1c113cfb-496e-4570-9442-76c0b302b1f6"],
+Cell[1604, 47, 305, 4, 33, "Output",ExpressionUUID->"afd2847a-53d3-4b12-8d70-5dfc93b76a46"]
+}, Open  ]],
+Cell[1924, 54, 152, 3, 29, "Input",ExpressionUUID->"b8c158c8-b637-4fd6-b92c-00c821162bb4"],
+Cell[2079, 59, 152, 3, 29, "Input",ExpressionUUID->"a8d024b0-4231-4498-80d1-f2fcd39f2a5b"]
+}, Open  ]]
+}
+]
+*)
+
