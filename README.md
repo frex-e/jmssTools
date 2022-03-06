@@ -17,6 +17,8 @@
 
 ## Commands:
 
+Also commands stated here are currently outdated, please see `documentation.nb` for up to date info.
+
 ### FindVariation:
 Gives you the variation for a given set of data. Note: you need generally need at least 3 data points  
 In= ```FindVariation[{{1, 5}, {8, 2.5}, {64, 1.25}}, x]```  
