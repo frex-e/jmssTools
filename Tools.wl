@@ -376,7 +376,7 @@ DetailedPlot[exp_, args__, opts:OptionsPattern[]] :=
 				];
 				
 				(* vertical *)
-				funran = Reduce[Reduce[System`FunctionDiscontinuities[currentExpression,var]&&startPoint<=var<=endPoint,var,Reals]//Simplify,var];
+				funran = Reduce[Reduce[System`FunctionDiscontinuities[currentExpression,var]&&(startPoint-1)<=var<=(1+endPoint),var,Reals]//Simplify,var];
 				discon = {};
 				Table[
 				Table[
