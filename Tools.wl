@@ -24,6 +24,9 @@ Surdify::usage = "Converts expressions with fractional powers to surd form.";
 NormalLine::usage = "";
 FindLine::usage = "";
 RFTest::usage == "";
+FirstDerivative::usage = "FD[exp,{x,y}]";
+SecondDerivative::usage="SD[exp,{x,y}]";
+RatDenom::usage="";
 
 
 DecimalPlaces = DecimalPlaces;
@@ -42,6 +45,40 @@ Begin["`Private`"]
 
 
 FindLine[a_,b_,var_]:=Module[{y},y/.Solve[y-a[[2]]==((b[[2]]-a[[2]])/(b[[1]]-a[[1]]))(var - a[[1]]),y]//FullSimplify]
+
+
+(* ::Subsection:: *)
+(*Stationary Points*)
+
+
+StationaryPoints[exp_,x_]:=Prepend[{x,exp}/.Solve[D[exp,x]==0//Evaluate,x],{"x","f[x]"}]//FullSimplify//TableForm
+
+
+(* ::Subsection::Closed:: *)
+(*RatDenom*)
+
+
+HoldAll[RatDenom,HoldAll];
+
+
+RatDenom[x_]:=Module[{y,nn,dd,f,g,c,k,blah},(y=Together[x];
+nn=Numerator[y];
+dd=Denominator[y];
+f=MinimalPolynomial[dd,t];
+c=f/. t->0;
+g=Factor[(c-f)/t];
+{k,blah}=FactorTermsList[Expand[nn*(g/. t->dd)]];
+Sign[c] ((k/GCD[k,c])*blah)/HoldForm[Evaluate@Abs[c/GCD[k,c]]])]
+
+
+(* ::Subsection::Closed:: *)
+(*Derivative Stuff*)
+
+
+FirstDerivative[exp_,{y_,x_}]:= Solve[Dt[exp,x],Dt[y,x]]/.{HoldPattern[Dt[y,x]]->  \[DifferentialD] y/\[DifferentialD] x}
+
+
+SecondDerivative[exp_,{y_,x_}]:=(Solve[Dt[exp,{x,2}],Dt[y,{x,2}]]/.Solve[Dt[exp,x],Dt[y,x]]//FullSimplify)//TraditionalForm//DisplayForm
 
 
 (* ::Subsection::Closed:: *)
@@ -224,7 +261,7 @@ RestrictedInverse[variable_,expression_,condition_]:=
 	InverseFunction[Function[variable, ConditionalExpression[expression, condition]]]
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*DetailedPlot*)
 
 
@@ -463,7 +500,7 @@ DetailedPlot[exp_, args__, opts:OptionsPattern[]] :=
 	]
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Turning Point Form*)
 
 
