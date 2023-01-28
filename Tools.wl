@@ -270,7 +270,7 @@ RestrictedInverse[variable_,expression_,condition_]:=
 
 
 SetAttributes[DetailedPlot, HoldAll]
-Options[DetailedPlot] = Flatten[Append[Options[Plot], {Labels -> True, DecimalPlaces -> False, Asymptotes -> True}]];
+Options[DetailedPlot] = Flatten[Append[Options[Plot], {Labels -> True, DecimalPlaces -> False, Asymptotes -> False}]];
 
 DetailedPlot[exp_, args__, opts:OptionsPattern[]] :=
 	Module[{vAssGraph,funran,discon,vAsses,assVar, hAssGraph, y, currAss, hAsses, currAsses, ass, roundedPoint, mapOpts, otherExp, currentPoint, pointMap, currentKey, graph, pointsGraph, currentExpression, exps, whichLabels, currentSolutions, points, intersections, stationary, intercepts, ClosedHole, OpenHole, var, startPoint, endPoint, curSol},
